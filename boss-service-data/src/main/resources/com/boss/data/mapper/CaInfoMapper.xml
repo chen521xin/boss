@@ -3,7 +3,7 @@
 <mapper namespace="com.boss.data.mapper.CaInfoMapper">
 	<select id="selectCaInfoListByPage" resultType="com.boss.core.db.CaInfo">
 		SELECT 
-					<include refid="select_column_list"/>
+					*
 		FROM 
 					d_ca_info
 	</select>

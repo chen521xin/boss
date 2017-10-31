@@ -12,3 +12,12 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+  application:
+    name: boss-service-data
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/  ##eureka无需认证时默认地址
+  instance:
+    prefer-ip-address: true  ##能看到ip
+    intance-id: ${spring.application.name}:#{spring.application.instance_id:${service.port}}  

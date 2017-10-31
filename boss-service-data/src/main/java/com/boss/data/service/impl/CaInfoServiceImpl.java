@@ -8,9 +8,11 @@
  */
 package com.boss.data.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.boss.core.db.CaInfo;
+import com.boss.data.mapper.CaInfoMapper;
 import com.boss.data.service.CaInfoService;
 import com.boss.utils.feature.orm.mybatis.Page;
 
@@ -25,10 +27,13 @@ import com.boss.utils.feature.orm.mybatis.Page;
 @Service("CaInfoService")
 public class CaInfoServiceImpl implements CaInfoService{
 
+	@Autowired
+	private CaInfoMapper cainfoMapper;
+	
 	@Override
-	public Page<CaInfo> selectCaInfoListByPage(Page<CaInfo> cainfo) {
-		// TODO Auto-generated method stub
-		return null;
+	public Page<CaInfo> selectCaInfoListByPage(Page<CaInfo> caInfo) {
+		cainfoMapper.selectCaInfoListByPage(caInfo);
+		return caInfo;
 	}
 
 }

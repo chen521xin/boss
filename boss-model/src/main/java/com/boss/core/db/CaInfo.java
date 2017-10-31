@@ -69,6 +69,7 @@ public class CaInfo implements Serializable {
 	 */
 	@ApiModelProperty(value = "最后修改人", dataType = "java.lang.String", required = false)
 	private String lastUpdateBy;
+	
 
 	public String getId() {
 		return id;

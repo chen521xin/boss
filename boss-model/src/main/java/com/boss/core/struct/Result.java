@@ -10,6 +10,8 @@ package com.boss.core.struct;
 
 import java.io.Serializable;
 
+import org.springframework.validation.BindingResult;
+
 import com.alibaba.fastjson.JSONObject;
 
 /**
@@ -39,7 +41,9 @@ public class Result implements Serializable {
 	public static Result suc(boolean success, String message) {
 		return new Result(success, message);
 	}
-	
+	public static Result getValidationMessage(BindingResult bindingResult) {
+		return error(bindingResult.getAllErrors().get(0).getDefaultMessage());
+	}
 	public Result() {
 	}
 
