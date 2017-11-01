@@ -13,11 +13,13 @@ spring:
     hibernate:
       ddl-auto: update
   application:
-    name: boss-service-data
+    name: ${APP_NAME:boss-service-data}
+    instance_id: ${random.value}
 eureka:
+  instance:
+    metadataMap:
+      instanceId: ${spring.application.name}:${spring.application.instance_id}
+    perferIpAddress: true
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/  ##eureka无需认证时默认地址
-  instance:
-    prefer-ip-address: true  ##能看到ip
-    intance-id: ${spring.application.name}:#{spring.application.instance_id:${service.port}}  
+      defaultZone: ${SERVICE_URL:http://${BOSS_EUREKA_PORT:127.0.0.1}:${SERVICE_PORT:8761}/${register.name:eureka}/}  ##eureka无需认证时默认地址

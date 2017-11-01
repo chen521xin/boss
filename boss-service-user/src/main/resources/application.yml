@@ -1,2 +1,24 @@
 server:
     port: 11004
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/boss
+    username: boss
+    password: 111111
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    database: MySQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  application:
+    name: ${APP_NAME:boss-service-user}
+    instance_id: ${random.value}
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${SERVICE_URL:http://${BOSS_EUREKA_PORT:127.0.0.1}:${SERVICE_PORT:8761}/${register.name:eureka}/}  ##eureka无需认证时默认地址
+  instance:
+    metadataMap:
+      instanceId: ${spring.application.name}:${spring.application.instance_id}
+    perferIpAddress: true  
