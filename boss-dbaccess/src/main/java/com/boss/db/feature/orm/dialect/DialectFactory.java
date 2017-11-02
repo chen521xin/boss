@@ -6,7 +6,7 @@
  *#                                                                 #
  *###################################################################
  */
-package com.boss.utils.feature.orm.dialect;
+package com.boss.db.feature.orm.dialect;
 
 import org.apache.ibatis.session.Configuration;
 

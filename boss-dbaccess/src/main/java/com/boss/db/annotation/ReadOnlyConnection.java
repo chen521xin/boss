@@ -6,29 +6,24 @@
  *#                                                                 #
  *###################################################################
  */
-package com.boss.utils.feature.orm.dialect;
+package com.boss.db.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 /**
- * @description
- * @data 2017年10月24日下午7:19:21
+ * @description  该注解注释在service方法上，标注为链接slaves库
+ * @data 2017年11月2日下午5:42:49
  * @author Administrator
  * @version v1.0
  * @since v1.0
  *
  **/
-public abstract class AbstractDialect {
 
-	/**
-	 * 得到分页SQL
-	 * @param sql
-	 * @param offset
-	 * @param limit
-	 * @return
-	 */
-	public abstract String getLimitSring(String sql,int offset,int limit);
-	/**
-	 * 得到总数量SQL
-	 * @param sql
-	 * @return
-	 */
-	public abstract String getCountString(String sql);
+@Target({ElementType.METHOD,ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface ReadOnlyConnection {
+
 }

@@ -6,7 +6,7 @@
  *#                                                                 #
  *###################################################################
  */
-package com.boss.utils.feature.orm.mybatis;
+package com.boss.db.feature.orm.mybatis;
 
 import java.beans.Statement;
 import java.util.Properties;

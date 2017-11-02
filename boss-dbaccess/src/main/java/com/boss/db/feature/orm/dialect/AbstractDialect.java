@@ -6,20 +6,29 @@
  *#                                                                 #
  *###################################################################
  */
-package com.boss.data.service;
-
-import com.boss.core.db.CaInfo;
-import com.boss.db.feature.orm.mybatis.Page;
-
+package com.boss.db.feature.orm.dialect;
 /**
  * @description
- * @data 2017年10月24日下午6:13:18
+ * @data 2017年10月24日下午7:19:21
  * @author Administrator
  * @version v1.0
  * @since v1.0
  *
  **/
-public interface CaInfoService {
+public abstract class AbstractDialect {
 
-	Page<CaInfo> selectCaInfoListByPage(Page<CaInfo> cainfo);
+	/**
+	 * 得到分页SQL
+	 * @param sql
+	 * @param offset
+	 * @param limit
+	 * @return
+	 */
+	public abstract String getLimitSring(String sql,int offset,int limit);
+	/**
+	 * 得到总数量SQL
+	 * @param sql
+	 * @return
+	 */
+	public abstract String getCountString(String sql);
 }

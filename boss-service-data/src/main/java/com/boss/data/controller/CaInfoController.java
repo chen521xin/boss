@@ -21,7 +21,7 @@ import com.boss.core.db.BaseEntity;
 import com.boss.core.db.CaInfo;
 import com.boss.core.struct.Result;
 import com.boss.data.service.CaInfoService;
-import com.boss.utils.feature.orm.mybatis.Page;
+import com.boss.db.feature.orm.mybatis.Page;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

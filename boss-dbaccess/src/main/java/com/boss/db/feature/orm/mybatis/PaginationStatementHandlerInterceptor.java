@@ -6,7 +6,7 @@
  *#                                                                 #
  *###################################################################
  */
-package com.boss.utils.feature.orm.mybatis;
+package com.boss.db.feature.orm.mybatis;
 
 import java.beans.Statement;
 import java.sql.Connection;
@@ -36,8 +36,8 @@ import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.boss.utils.feature.orm.dialect.AbstractDialect;
-import com.boss.utils.feature.orm.dialect.DialectFactory;
+import com.boss.db.feature.orm.dialect.AbstractDialect;
+import com.boss.db.feature.orm.dialect.DialectFactory;
 
 /**
  * @description

@@ -14,7 +14,8 @@ import org.springframework.stereotype.Service;
 import com.boss.core.db.CaInfo;
 import com.boss.data.mapper.CaInfoMapper;
 import com.boss.data.service.CaInfoService;
-import com.boss.utils.feature.orm.mybatis.Page;
+import com.boss.db.annotation.ReadOnlyConnection;
+import com.boss.db.feature.orm.mybatis.Page;
 
 /**
  * @description
@@ -30,6 +31,7 @@ public class CaInfoServiceImpl implements CaInfoService{
 	@Autowired
 	private CaInfoMapper cainfoMapper;
 	
+	@ReadOnlyConnection
 	@Override
 	public Page<CaInfo> selectCaInfoListByPage(Page<CaInfo> caInfo) {
 		cainfoMapper.selectCaInfoListByPage(caInfo);

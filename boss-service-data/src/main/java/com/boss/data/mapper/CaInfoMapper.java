@@ -11,7 +11,7 @@ package com.boss.data.mapper;
 import java.util.List;
 
 import com.boss.core.db.CaInfo;
-import com.boss.utils.feature.orm.mybatis.Page;
+import com.boss.db.feature.orm.mybatis.Page;
 /**
  * @description
  * @data 2017年10月24日下午6:48:33
