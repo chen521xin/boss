@@ -29,6 +29,9 @@ public class MyAbsctractRoutingDataSource extends AbstractRoutingDataSource {
 
 	private static Logger logger = LoggerFactory.getLogger(MyAbsctractRoutingDataSource.class);
 
+	public MyAbsctractRoutingDataSource(){
+		
+	}
 	@Override
 	protected Object determineCurrentLookupKey() {
 		logger.info("current database context is "+DbcontextHolder.getDbType());
