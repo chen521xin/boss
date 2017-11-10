@@ -62,6 +62,7 @@ public class MybatisConfiguration implements EnvironmentAware {
 
 	private MyAbsctractRoutingDataSource dataSource;
 
+	@Bean
 	public MyAbsctractRoutingDataSource roundRobinDataSourceProxy() {
 		if (dataSource == null) {
 			MyAbsctractRoutingDataSource proxy = new MyAbsctractRoutingDataSource();
@@ -82,7 +83,7 @@ public class MybatisConfiguration implements EnvironmentAware {
 			SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
 			sessionFactory.setDataSource(dataSource);
 			sessionFactory.setConfigLocation(
-					new DefaultResourceLoader().getResource(String.format("/mybatis-config%S.xml", getProfile())));
+					new DefaultResourceLoader().getResource(String.format("/mybatis-config%s.xml", getProfile())));
 			logger.debug("Configuring sql session factory");
 			return sessionFactory.getObject();
 

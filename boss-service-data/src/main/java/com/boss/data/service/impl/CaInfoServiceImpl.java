@@ -25,7 +25,7 @@ import com.boss.db.feature.orm.mybatis.Page;
  * @since v1.0
  *
  **/
-@Service("CaInfoService")
+@Service
 public class CaInfoServiceImpl implements CaInfoService{
 
 	@Autowired
