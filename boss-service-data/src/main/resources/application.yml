@@ -73,3 +73,6 @@ jdbc:
     poolPreparedStatements: ${JDBC_SLAVE_POOLPREPAREDSTATEMENTS:false}
     maxPoolPreparedStatementPerConnectionSize: ${JDBC_SLAVE_MAXPOOLPREPAREDSTATEMENTPERCONNECTIONSIZE:20}
     FILTERS: ${JDBC_SLAVE_FILTERS:stat}
+mybatis:
+  configLocation: classpath:/mybatis-config.xml
+  mapperLocations: classpath:/sse/boss/data/mapper/*.xml

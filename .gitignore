@@ -1,5 +1,10 @@
-*/target
-*.iml
-/.idea
-*.class
+*/bin/
+.classpath
+.settings
+.class
 target/
+.metadata/*
+.project
+*.iml
+.idea/*
+*.bak

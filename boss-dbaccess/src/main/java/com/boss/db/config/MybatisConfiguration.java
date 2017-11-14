@@ -31,7 +31,7 @@ import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -83,7 +83,7 @@ public class MybatisConfiguration implements EnvironmentAware {
 			SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
 			sessionFactory.setDataSource(dataSource);
 			sessionFactory.setConfigLocation(
-					new DefaultResourceLoader().getResource(String.format("/mybatis-config%s.xml", getProfile())));
+					new PathMatchingResourcePatternResolver().getResource(String.format("classpath:mybatis-config%s.xml", getProfile())));
 			logger.debug("Configuring sql session factory");
 			return sessionFactory.getObject();
 
