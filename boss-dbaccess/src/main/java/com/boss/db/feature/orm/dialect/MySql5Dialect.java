@@ -6,47 +6,28 @@
  *#                                                                 #
  *###################################################################
  */
-package com.boss.core.value;
+package com.boss.db.feature.orm.dialect;
 
 /**
  * @description
- * @data 2017年10月26日下午6:27:13
+ * @data 2017年11月14日下午1:39:35
  * @author Administrator
  * @version v1.0
  * @since v1.0
  *
  **/
-public class BizCode {
+public class MySql5Dialect extends AbstractDialect {
 
-	public static final BizCode DEFAULT_PARAM_NULL_EXCEPTION = new BizCode(10001, "入参不能为空");
+	protected static final String SQL_END_DELIMITER = ";";
 
-	public BizCode(int code, String message) {
-		this.code = code;
-		this.message = message;
-	}
-
-	private int code;
-	private String message;
-
-	public void setCode(int code) {
-		this.code = code;
-	}
-
-	public int getCode() {
-		return code;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
+	@Override
+	public String getLimitSring(String sql, int offset, int limit) {
+		return MySql5PageHepler.getLimitString(sql, offset, limit);
 	}
 
 	@Override
-	public String toString() {
-		return getMessage();
+	public String getCountString(String sql) {
+		return MySql5PageHepler.getCountString(sql);
 	}
 
 }

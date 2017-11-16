@@ -31,7 +31,7 @@ import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -45,11 +45,11 @@ import com.boss.db.config.DbcontextHolder.DbType;
  * @since v1.0
  *
  **/
-@Configuration 
+@Configuration
 @ConditionalOnClass({ EnableTransactionManagement.class, EntityManager.class })
 @AutoConfigureAfter({ DatabaseConfiguration.class })
 @EntityScan("com.boss.core.db")
-@MapperScan(basePackages = { "sse.boss.**.mapper" })
+@MapperScan(basePackages = { "com.boss.*.mapper" })
 public class MybatisConfiguration implements EnvironmentAware {
 
 	private static Logger logger = LoggerFactory.getLogger(MybatisConfiguration.class);
@@ -82,8 +82,10 @@ public class MybatisConfiguration implements EnvironmentAware {
 		try {
 			SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
 			sessionFactory.setDataSource(dataSource);
-			sessionFactory.setConfigLocation(
-					new PathMatchingResourcePatternResolver().getResource(String.format("classpath:mybatis-config%s.xml", getProfile())));
+			// 加载全局的配置文件
+			sessionFactory.setConfigLocation(new DefaultResourceLoader()
+					.getResource(String.format("classpath:mybatis-config%s.xml", getProfile())));
+
 			logger.debug("Configuring sql session factory");
 			return sessionFactory.getObject();
 

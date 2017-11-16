@@ -35,15 +35,19 @@ public class Result implements Serializable {
 	public static Result success() {
 		return suc(true, "");
 	}
+
 	public Result(boolean success) {
-		this.success=success;
+		this.success = success;
 	}
+
 	public static Result suc(boolean success, String message) {
 		return new Result(success, message);
 	}
+
 	public static Result getValidationMessage(BindingResult bindingResult) {
 		return error(bindingResult.getAllErrors().get(0).getDefaultMessage());
 	}
+
 	public Result() {
 	}
 
@@ -63,13 +67,16 @@ public class Result implements Serializable {
 		result.setResultObject(obj);
 		return result;
 	}
+
 	public static Result error(String message) {
-		return new Result(false,message);
+		return new Result(false, message);
 	}
+
 	public static String successToJsonString(Object obj) {
-		Result result=success(obj);
+		Result result = success(obj);
 		return JSONObject.toJSONString(result);
 	}
+
 	public String getMessage() {
 		return message;
 	}

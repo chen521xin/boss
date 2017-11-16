@@ -40,8 +40,8 @@ public class TestController {
 	private DiscoveryClient discoverClient;
 
 	/**
-	 * 得到boss-service-data服务的注册IP地址
-	 * http://192.168.1.105:11003/
+	 * 得到boss-service-data服务的注册IP地址 http://192.168.1.105:11003/
+	 * 
 	 * @return
 	 */
 	@GetMapping("eureka-instance")
@@ -49,17 +49,12 @@ public class TestController {
 		InstanceInfo instance = this.eurekaClient.getNextServerFromEureka("boss-service-data", false);
 		return instance.getHomePageUrl();
 	}
-	
+
 	/**
-	 * 得到boss-service-data服务的注册信息
-	 * {
-           "host": "192.168.1.105",
-           "port": 11003,
-           "metadata": {},
-           "secure": false,
-           "uri": "http://192.168.1.105:11003",
-           "serviceId": "boss-service-data"
-     * }
+	 * 得到boss-service-data服务的注册信息 { "host": "192.168.1.105", "port": 11003,
+	 * "metadata": {}, "secure": false, "uri": "http://192.168.1.105:11003",
+	 * "serviceId": "boss-service-data" }
+	 * 
 	 * @return
 	 */
 	@GetMapping("eureka-info")

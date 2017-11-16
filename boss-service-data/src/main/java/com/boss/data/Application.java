@@ -6,18 +6,14 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.ComponentScan;
 
-
-
 @EnableEurekaClient
 @EnableDiscoveryClient
 @SpringBootApplication
-@ComponentScan(basePackages={"com.boss.data","com.boss.spring","com.boss.db.config"})
-public class  Application{
+@ComponentScan(basePackages = { "com.boss.db.config", "com.boss.data", "com.boss.spring", "com.boss.core" })
+public class Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
-	
 
-   
 }

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.boss.core.db.BaseEntity;
 import com.boss.core.db.CaInfo;
 import com.boss.core.struct.Result;
 import com.boss.data.service.CaInfoService;
@@ -46,12 +45,12 @@ public class CaInfoController {
 	@ApiOperation(value = "ca白名单分页查询", httpMethod = "POST", response = Page.class, notes = "ca白名单分页查询")
 	@PostMapping("/")
 	public String getAllByPage(
-			@ApiParam(required = false, name = "baseEntity", value = "ca入参vo") @RequestBody @Valid BaseEntity baseEntity,
+			@ApiParam(required = false, name = "baseEntity", value = "ca入参vo") @RequestBody @Valid CaInfo caInfo,
 			BindingResult result) {
-		if(result.hasErrors()){
+		if (result.hasErrors()) {
 			Result.getValidationMessage(result);
 		}
-		Page<CaInfo> ca=new Page<>(baseEntity.getPageNo(),baseEntity.getPageSize());
+		Page<CaInfo> ca = new Page<>(caInfo.getPageNo(), caInfo.getPageSize());
 		caInfoService.selectCaInfoListByPage(ca);
 		return Result.successToJsonString(ca);
 	}

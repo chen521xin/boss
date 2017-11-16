@@ -20,22 +20,23 @@ import org.apache.ibatis.session.Configuration;
  **/
 public class DialectFactory {
 
-	public static String dialectClass=null;
-	public static AbstractDialect buildDialect(Configuration configuration){
-		if(dialectClass==null){
+	public static String dialectClass = null;
+
+	public static AbstractDialect buildDialect(Configuration configuration) {
+		if (dialectClass == null) {
 			synchronized (DialectFactory.class) {
-				if(dialectClass==null){
-					dialectClass=configuration.getVariables().getProperty("dialectClass");
+				if (dialectClass == null) {
+					dialectClass = configuration.getVariables().getProperty("dialectClass");
 				}
 			}
 		}
-		AbstractDialect dislect=null;
+		AbstractDialect dislect = null;
 		try {
-			dislect=(AbstractDialect) Class.forName(dialectClass).newInstance();
+			dislect = (AbstractDialect) Class.forName(dialectClass).newInstance();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
 		return dislect;
 	}
 }

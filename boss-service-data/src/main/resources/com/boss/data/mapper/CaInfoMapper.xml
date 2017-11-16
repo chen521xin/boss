@@ -2,15 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.boss.data.mapper.CaInfoMapper">
 	<select id="selectCaInfoListByPage" resultType="com.boss.core.db.CaInfo">
-		SELECT 
-					*
-		FROM 
-					d_ca_info
+		SELECT
+		          	 id
+		         	,username
+		 FROM 
+		        	 d_ca_info 
+     GROUP BY
+                	 id 
+     ORDER　BY   
+                 	 id 
+         DESC
 	</select>
-	<sql id="select_column_list">
-					id,
-					username,
-					valid_since,
-					expire_since
-	</sql>
 </mapper>

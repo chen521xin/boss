@@ -8,7 +8,6 @@
  */
 package com.boss.db.feature.orm.mybatis;
 
-import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +15,6 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import org.apache.ibatis.executor.parameter.ParameterHandler;
-import org.apache.ibatis.executor.resultset.ResultSetHandler;
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.plugin.Interceptor;
@@ -47,37 +45,40 @@ import com.boss.db.feature.orm.dialect.DialectFactory;
  * @since v1.0
  *
  **/
-@Intercepts({@Signature(type=ResultSetHandler.class,method="handleResultSets",args={Statement.class})})
-public class PaginationStatementHandlerInterceptor implements Interceptor{
-	private final static Logger logger=LoggerFactory.getLogger(PaginationStatementHandlerInterceptor.class);
-	private static final ObjectFactory DEFAULT_OBJECT_FACTORY=new DefaultObjectFactory();
-	private static final ObjectWrapperFactory DEFAULT_OBJECT_WRAPPER_FACTORY=new DefaultObjectWrapperFactory();
-	private static final ReflectorFactory DEFAULT_REFLECTOR_FACTORY=new DefaultReflectorFactory();
-	
+@Intercepts({
+		@Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class, Integer.class }) })
+public class PaginationStatementHandlerInterceptor implements Interceptor {
+	private final static Logger logger = LoggerFactory.getLogger(PaginationStatementHandlerInterceptor.class);
+	private static final ObjectFactory DEFAULT_OBJECT_FACTORY = new DefaultObjectFactory();
+	private static final ObjectWrapperFactory DEFAULT_OBJECT_WRAPPER_FACTORY = new DefaultObjectWrapperFactory();
+	private static final ReflectorFactory DEFAULT_REFLECTOR_FACTORY = new DefaultReflectorFactory();
+
 	@Override
 	public Object intercept(Invocation invocation) throws Throwable {
-		StatementHandler statementHandler=(StatementHandler) invocation.getTarget();
-		ParameterHandler parameterHandler=statementHandler.getParameterHandler();
-		BoundSql boundSql=statementHandler.getBoundSql();
-		MetaObject metaStatementHandler=MetaObject.forObject(statementHandler, DEFAULT_OBJECT_FACTORY, DEFAULT_OBJECT_WRAPPER_FACTORY, DEFAULT_REFLECTOR_FACTORY);
-		RowBounds rowBounds=(RowBounds) metaStatementHandler.getValue("rowBounds");
-		if(rowBounds==null|| rowBounds==RowBounds.DEFAULT){
+		StatementHandler statementHandler = (StatementHandler) invocation.getTarget();
+		ParameterHandler parameterHandler = statementHandler.getParameterHandler();
+		BoundSql boundSql = statementHandler.getBoundSql();
+		MetaObject metaStatementHandler = MetaObject.forObject(statementHandler, DEFAULT_OBJECT_FACTORY,
+				DEFAULT_OBJECT_WRAPPER_FACTORY, DEFAULT_REFLECTOR_FACTORY);
+		RowBounds rowBounds = (RowBounds) metaStatementHandler.getValue("delegate.rowBounds");
+		if (rowBounds == null || rowBounds == RowBounds.DEFAULT) {
 			return invocation.proceed();
 		}
-		
-		Configuration configuration=(Configuration) metaStatementHandler.getValue("delegate.configuration");
-		AbstractDialect dialect =DialectFactory.buildDialect(configuration);
-		String originalSql=(String) metaStatementHandler.getValue("delegate.boundSql.sql");
-		Page<?> page=(Page<?>) rowBounds;
-		String countSql=dialect.getCountString(originalSql);
-		Connection connection=(Connection) invocation.getArgs()[0];
-		int total=getTotal(parameterHandler,connection,countSql);
+
+		Configuration configuration = (Configuration) metaStatementHandler.getValue("delegate.configuration");
+		AbstractDialect dialect = DialectFactory.buildDialect(configuration);
+		String originalSql = (String) metaStatementHandler.getValue("delegate.boundSql.sql");
+		Page<?> page = (Page<?>) rowBounds;
+		String countSql = dialect.getCountString(originalSql);
+		Connection connection = (Connection) invocation.getArgs()[0];
+		int total = getTotal(parameterHandler, connection, countSql);
 		page.setTotalCount(total);
-		metaStatementHandler.setValue("delegate.boundSql.sql", dialect.getLimitSring(originalSql, page.getOffset(), page.getLimit()));
+		metaStatementHandler.setValue("delegate.boundSql.sql",
+				dialect.getLimitSring(originalSql, page.getOffset(), page.getLimit()));
 		metaStatementHandler.setValue("delegate.rowBounds.offset", RowBounds.NO_ROW_OFFSET);
 		metaStatementHandler.setValue("delegate.rowBounds.limit", RowBounds.NO_ROW_LIMIT);
-		if(logger.isDebugEnabled()){
-			logger.debug("分页SQL："+boundSql.getSql());
+		if (logger.isDebugEnabled()) {
+			logger.debug("分页SQL：" + boundSql.getSql());
 		}
 		return invocation.proceed();
 	}
@@ -89,15 +90,16 @@ public class PaginationStatementHandlerInterceptor implements Interceptor{
 
 	@Override
 	public void setProperties(Properties properties) {
-		
+
 	}
-	public int getTotal(ParameterHandler parameterHandler,Connection conn,String countSql) throws SQLException{
-		PreparedStatement pre=conn.prepareStatement(countSql);
+
+	public int getTotal(ParameterHandler parameterHandler, Connection conn, String countSql) throws SQLException {
+		PreparedStatement pre = conn.prepareStatement(countSql);
 		parameterHandler.setParameters(pre);
-		ResultSet rs=pre.executeQuery();
-		int count=0;
-		if(rs.next()){
-			count=rs.getInt(1);
+		ResultSet rs = pre.executeQuery();
+		int count = 0;
+		if (rs.next()) {
+			count = rs.getInt(1);
 		}
 		rs.close();
 		pre.close();

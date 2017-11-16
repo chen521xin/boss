@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiModelProperty;
  *
  **/
 @ApiModel("CA白名单信息")
-public class CaInfo implements Serializable {
+public class CaInfo extends BaseEntity implements Serializable {
 
 	/**
 	 * 
@@ -69,7 +69,6 @@ public class CaInfo implements Serializable {
 	 */
 	@ApiModelProperty(value = "最后修改人", dataType = "java.lang.String", required = false)
 	private String lastUpdateBy;
-	
 
 	public String getId() {
 		return id;

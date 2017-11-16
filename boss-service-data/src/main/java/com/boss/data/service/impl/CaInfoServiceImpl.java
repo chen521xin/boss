@@ -26,11 +26,11 @@ import com.boss.db.feature.orm.mybatis.Page;
  *
  **/
 @Service
-public class CaInfoServiceImpl implements CaInfoService{
+public class CaInfoServiceImpl implements CaInfoService {
 
 	@Autowired
 	private CaInfoMapper cainfoMapper;
-	
+
 	@ReadOnlyConnection
 	@Override
 	public Page<CaInfo> selectCaInfoListByPage(Page<CaInfo> caInfo) {

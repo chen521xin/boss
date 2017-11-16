@@ -20,7 +20,7 @@ import com.boss.db.config.DbcontextHolder;
 import com.boss.db.config.DbcontextHolder.DbType;
 
 /**
- * @description  Spring AOP对注解的拦截
+ * @description Spring AOP对注解的拦截
  * @data 2017年11月2日下午5:33:32
  * @author Administrator
  * @version v1.0
@@ -29,14 +29,15 @@ import com.boss.db.config.DbcontextHolder.DbType;
  **/
 @Aspect
 @Component
-public class ReadOnlyConnectionInterceptor implements Ordered{
+public class ReadOnlyConnectionInterceptor implements Ordered {
 	private static Logger logger = LoggerFactory.getLogger(ReadOnlyConnectionInterceptor.class);
 
 	@Around("@annotation(readOnlyConnection)")
-	public Object proceed(ProceedingJoinPoint proceedingJoinPoint,ReadOnlyConnectionInterceptor readOnlyConnection) throws Throwable{
-		DbType currentDbType=DbcontextHolder.getDbType();
+	public Object proceed(ProceedingJoinPoint proceedingJoinPoint, ReadOnlyConnectionInterceptor readOnlyConnection)
+			throws Throwable {
+		DbType currentDbType = DbcontextHolder.getDbType();
 		try {
-		logger.info("Setting dataBase connection to readOnly");
+			logger.info("Setting dataBase connection to readOnly");
 			DbcontextHolder.setDbType(DbcontextHolder.DbType.READ);
 			return proceedingJoinPoint.proceed();
 		} finally {
@@ -44,6 +45,7 @@ public class ReadOnlyConnectionInterceptor implements Ordered{
 			logger.info("Setting dataBase connection to readOnly");
 		}
 	}
+
 	@Override
 	public int getOrder() {
 		// TODO Auto-generated method stub

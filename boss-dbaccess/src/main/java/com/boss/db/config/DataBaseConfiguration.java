@@ -35,23 +35,24 @@ import com.alibaba.druid.pool.DruidDataSource;
  * @since v1.0
  *
  **/
-@Configuration 
-@AutoConfigureBefore({MybatisConfiguration.class})
+@Configuration
+@AutoConfigureBefore({ MybatisConfiguration.class })
 @EnableTransactionManagement
-public class DataBaseConfiguration implements EnvironmentAware{
+public class DataBaseConfiguration implements EnvironmentAware {
 
-	private static Logger logger=LoggerFactory.getLogger(DataBaseConfiguration.class);
+	private static Logger logger = LoggerFactory.getLogger(DataBaseConfiguration.class);
 	private RelaxedPropertyResolver propertyresolver;
+
 	@Override
 	public void setEnvironment(Environment environment) {
-		this.propertyresolver=new RelaxedPropertyResolver(environment, "jdbc.");
+		this.propertyresolver = new RelaxedPropertyResolver(environment, "jdbc.");
 	}
 
-	@Bean(value="writerDataResource",destroyMethod="close",initMethod="init")
-	//优选选择该数据源
+	@Bean(value = "writerDataResource", destroyMethod = "close", initMethod = "init")
+	// 优选选择该数据源
 	@Primary
-	public DataSource writerDataSource() throws SQLException{
-		DruidDataSource dataSource=new DruidDataSource();
+	public DataSource writerDataSource() throws SQLException {
+		DruidDataSource dataSource = new DruidDataSource();
 		dataSource.setUrl(propertyresolver.getProperty("url"));
 		dataSource.setDriverClassName(propertyresolver.getProperty("driverClassName"));
 		dataSource.setUsername(propertyresolver.getProperty("userName"));
@@ -63,21 +64,25 @@ public class DataBaseConfiguration implements EnvironmentAware{
 		dataSource.setLogAbandoned(Boolean.parseBoolean(propertyresolver.getProperty("logAbandoned")));
 		dataSource.setRemoveAbandoned(Boolean.parseBoolean(propertyresolver.getProperty("removeAbandoned")));
 		dataSource.setRemoveAbandonedTimeout(Integer.parseInt(propertyresolver.getProperty("removeAbandonedTimeout")));
-		dataSource.setTimeBetweenEvictionRunsMillis(Integer.parseInt(propertyresolver.getProperty("timeBetweenEvictionRunMillis")));
-		dataSource.setMinEvictableIdleTimeMillis(Integer.parseInt(propertyresolver.getProperty("minEvictableIdleTimeMillis")));
+		dataSource.setTimeBetweenEvictionRunsMillis(
+				Integer.parseInt(propertyresolver.getProperty("timeBetweenEvictionRunMillis")));
+		dataSource.setMinEvictableIdleTimeMillis(
+				Integer.parseInt(propertyresolver.getProperty("minEvictableIdleTimeMillis")));
 		dataSource.setValidationQuery(propertyresolver.getProperty("validationQuery"));
 		dataSource.setTestWhileIdle(Boolean.parseBoolean(propertyresolver.getProperty("testWhileIdle")));
 		dataSource.setTestOnBorrow(Boolean.parseBoolean(propertyresolver.getProperty("testOnBorrow")));
 		dataSource.setTestOnBorrow(Boolean.parseBoolean(propertyresolver.getProperty("testOnReturn")));
-		dataSource.setPoolPreparedStatements(Boolean.parseBoolean(propertyresolver.getProperty("poolPreparedStatements")));
-		dataSource.setMaxPoolPreparedStatementPerConnectionSize(Integer.parseInt(propertyresolver.getProperty("maxPoolPreparedStatementPerConnectionSize")));
+		dataSource.setPoolPreparedStatements(
+				Boolean.parseBoolean(propertyresolver.getProperty("poolPreparedStatements")));
+		dataSource.setMaxPoolPreparedStatementPerConnectionSize(
+				Integer.parseInt(propertyresolver.getProperty("maxPoolPreparedStatementPerConnectionSize")));
 		dataSource.setFilters(propertyresolver.getProperty("FILTERS"));
 		return dataSource;
 	}
 
-	@Bean(value="readDataResource",destroyMethod="close",initMethod="init")
-	public DataSource readDataSource() throws SQLException{
-		DruidDataSource dataSource=new DruidDataSource();
+	@Bean(value = "readDataResource", destroyMethod = "close", initMethod = "init")
+	public DataSource readDataSource() throws SQLException {
+		DruidDataSource dataSource = new DruidDataSource();
 		dataSource.setUrl(propertyresolver.getProperty("slave.url"));
 		dataSource.setDriverClassName(propertyresolver.getProperty("slave.driverClassName"));
 		dataSource.setUsername(propertyresolver.getProperty("slave.userName"));
@@ -88,25 +93,30 @@ public class DataBaseConfiguration implements EnvironmentAware{
 		dataSource.setMaxActive(Integer.parseInt(propertyresolver.getProperty("slave.maxActive")));
 		dataSource.setLogAbandoned(Boolean.parseBoolean(propertyresolver.getProperty("slave.logAbandoned")));
 		dataSource.setRemoveAbandoned(Boolean.parseBoolean(propertyresolver.getProperty("slave.removeAbandoned")));
-		dataSource.setRemoveAbandonedTimeout(Integer.parseInt(propertyresolver.getProperty("slave.removeAbandonedTimeout")));
-		dataSource.setTimeBetweenEvictionRunsMillis(Integer.parseInt(propertyresolver.getProperty("slave.timeBetweenEvictionRunMillis")));
-		dataSource.setMinEvictableIdleTimeMillis(Integer.parseInt(propertyresolver.getProperty("slave.minEvictableIdleTimeMillis")));
+		dataSource.setRemoveAbandonedTimeout(
+				Integer.parseInt(propertyresolver.getProperty("slave.removeAbandonedTimeout")));
+		dataSource.setTimeBetweenEvictionRunsMillis(
+				Integer.parseInt(propertyresolver.getProperty("slave.timeBetweenEvictionRunMillis")));
+		dataSource.setMinEvictableIdleTimeMillis(
+				Integer.parseInt(propertyresolver.getProperty("slave.minEvictableIdleTimeMillis")));
 		dataSource.setValidationQuery(propertyresolver.getProperty("slave.validationQuery"));
 		dataSource.setTestWhileIdle(Boolean.parseBoolean(propertyresolver.getProperty("slave.testWhileIdle")));
 		dataSource.setTestOnBorrow(Boolean.parseBoolean(propertyresolver.getProperty("slave.testOnBorrow")));
 		dataSource.setTestOnBorrow(Boolean.parseBoolean(propertyresolver.getProperty("slave.testOnReturn")));
-		dataSource.setPoolPreparedStatements(Boolean.parseBoolean(propertyresolver.getProperty("slave.poolPreparedStatements")));
-		dataSource.setMaxPoolPreparedStatementPerConnectionSize(Integer.parseInt(propertyresolver.getProperty("slave.maxPoolPreparedStatementPerConnectionSize")));
+		dataSource.setPoolPreparedStatements(
+				Boolean.parseBoolean(propertyresolver.getProperty("slave.poolPreparedStatements")));
+		dataSource.setMaxPoolPreparedStatementPerConnectionSize(
+				Integer.parseInt(propertyresolver.getProperty("slave.maxPoolPreparedStatementPerConnectionSize")));
 		dataSource.setFilters(propertyresolver.getProperty("slave.FILTERS"));
 		return dataSource;
 	}
-	
-	@Bean(value="readDataResources")
-	public List<DataSource> getReadDataSource() throws SQLException{
-		List<DataSource> dataSources=new ArrayList<DataSource>();
+
+	@Bean(value = "readDataResources")
+	public List<DataSource> getReadDataSource() throws SQLException {
+		List<DataSource> dataSources = new ArrayList<DataSource>();
 		dataSources.add(readDataSource());
-		
-		logger.info("ReadDataSource count:"+dataSources.size());
+
+		logger.info("ReadDataSource count:" + dataSources.size());
 		return dataSources;
 	}
 }

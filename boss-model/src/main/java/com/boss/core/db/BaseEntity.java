@@ -30,16 +30,16 @@ public class BaseEntity implements Serializable {
 	/**
 	 * 页码
 	 */
-	@Min(value=1,message="最小值为1")
+	@Min(value = 1, message = "最小值为1")
 	@ApiModelProperty(value = "最后修改人", dataType = "java.lang.String", required = false)
-	private int pageNo=1;
+	private int pageNo = 1;
 	/**
 	 * 页码大小
 	 */
-	@Min(value=1,message="最小值为1")
+	@Min(value = 1, message = "最小值为1")
 	@ApiModelProperty(value = "最后修改人", dataType = "java.lang.String", required = false)
-	private int pageSize=10;
-	
+	private int pageSize = 10;
+
 	public int getPageNo() {
 		return pageNo;
 	}

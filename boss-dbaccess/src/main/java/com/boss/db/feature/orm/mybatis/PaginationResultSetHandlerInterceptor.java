@@ -8,7 +8,7 @@
  */
 package com.boss.db.feature.orm.mybatis;
 
-import java.beans.Statement;
+import java.sql.Statement;
 import java.util.Properties;
 
 import org.apache.ibatis.executor.resultset.DefaultResultSetHandler;
@@ -35,22 +35,25 @@ import org.apache.ibatis.session.RowBounds;
  * @since v1.0
  *
  **/
-@Intercepts({@Signature(type=ResultSetHandler.class,method="handleResultSets",args={Statement.class})})
-public class PaginationResultSetHandlerInterceptor implements Interceptor{
+@Intercepts({ @Signature(type = ResultSetHandler.class, method = "handleResultSets", args = { Statement.class }) })
+public class PaginationResultSetHandlerInterceptor implements Interceptor {
 
-	private static final ObjectFactory DEFAULT_OBJECT_FACTORY=new DefaultObjectFactory();
-	private static final ObjectWrapperFactory DEFAULT_OBJECT_WRAPPER_FACTORY=new DefaultObjectWrapperFactory();
-	private static final ReflectorFactory DEFAULT_REFLECTOR_FACTORY=new DefaultReflectorFactory();
+	private static final ObjectFactory DEFAULT_OBJECT_FACTORY = new DefaultObjectFactory();
+	private static final ObjectWrapperFactory DEFAULT_OBJECT_WRAPPER_FACTORY = new DefaultObjectWrapperFactory();
+	private static final ReflectorFactory DEFAULT_REFLECTOR_FACTORY = new DefaultReflectorFactory();
+
 	@Override
 	public Object intercept(Invocation invocation) throws Throwable {
-		DefaultResultSetHandler resultSetHandler=(DefaultResultSetHandler) invocation.getTarget();
-		MetaObject metaStatementHandler=MetaObject.forObject(resultSetHandler, DEFAULT_OBJECT_FACTORY, DEFAULT_OBJECT_WRAPPER_FACTORY, DEFAULT_REFLECTOR_FACTORY);
-		RowBounds rowBounds=(RowBounds) metaStatementHandler.getValue("rowBounds");
-		Object result=invocation.proceed();
-		if(rowBounds instanceof Page){
+		DefaultResultSetHandler resultSetHandler = (DefaultResultSetHandler) invocation.getTarget();
+		MetaObject metaStatementHandler = MetaObject.forObject(resultSetHandler, DEFAULT_OBJECT_FACTORY,
+				DEFAULT_OBJECT_WRAPPER_FACTORY, DEFAULT_REFLECTOR_FACTORY);
+		RowBounds rowBounds = (RowBounds) metaStatementHandler.getValue("rowBounds");
+
+		Object result = invocation.proceed();
+		if (rowBounds instanceof Page) {
 			metaStatementHandler.setValue("rowBounds.result", result);
 		}
-				return result;
+		return result;
 	}
 
 	@Override
@@ -60,7 +63,7 @@ public class PaginationResultSetHandlerInterceptor implements Interceptor{
 
 	@Override
 	public void setProperties(Properties properties) {
-		
+
 	}
 
 }

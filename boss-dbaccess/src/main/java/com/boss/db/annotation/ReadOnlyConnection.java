@@ -14,7 +14,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @description  该注解注释在service方法上，标注为链接slaves库
+ * @description 该注解注释在service方法上，标注为链接slaves库
  * @data 2017年11月2日下午5:42:49
  * @author Administrator
  * @version v1.0
@@ -22,7 +22,7 @@ import java.lang.annotation.Target;
  *
  **/
 
-@Target({ElementType.METHOD,ElementType.TYPE})
+@Target({ ElementType.METHOD, ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ReadOnlyConnection {
 
