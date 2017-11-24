@@ -4,6 +4,11 @@ spring:
   application:
     name: ${APP_NAME:boss-service-data}
     instance_id: ${random.value}
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        serviceId: boss-server-config
   profiles:
     active: ${PROFILE:dev}
 eureka:

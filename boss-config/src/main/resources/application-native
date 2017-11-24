@@ -1,6 +1,0 @@
-spring:
-  cloud:      ##加载本地开发环境
-    config:
-      server:
-        native:
-          serachLocations: classpath:/config 
