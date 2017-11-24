@@ -1,0 +1,9 @@
+spring:
+  cloud:      ##加载本地开发环境
+    config:
+      server:
+        git:
+          uri: ${GIT_PROJECT:https://github.com/chen521xin/boss.git}
+          search-paths: ${GIT_SEARCH_PATHS:/boss/boss-config/src/main/resources/config}
+          username: ${GIT_USERNAME:chen521xin}
+          password: ${GIT_PASSWORD:git521hub}

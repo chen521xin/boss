@@ -6,11 +6,7 @@ spring:
   application:
     name: ${APP_NAME:BOSS-CONFIG-SERVICE}
     instance_id: ${random.value}
-  cloud:
-    config:
-      server:
-        native:
-          serach-locations: classpath:/config  
+ 
     
 eureka:
   instance:
