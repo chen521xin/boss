@@ -1,18 +1,18 @@
-##config
 server:
-    port: 11001
-
+  port: 11001
 spring:
   application:
-    name: ${APP_NAME:boss-server-config}
+    name: ${APP_NAME:boss-config}
     instance_id: ${random.value}
-  cloud:      ##加载本地开发环境
+  profiles:
+    active: native
+  cloud:
     config:
       server:
+        health:
+          enabled:  false
         native:
           searchLocations: classpath:config/trunk/
-  profiles:
-    active: ${PROFILE:native}
     
 eureka:
   instance:

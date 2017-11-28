@@ -4,10 +4,6 @@ sp:
 server:  
   port: ${sp.app.port:11003}
   
-spring:
-  jpa:
-    show-sql: ${JPA_DEBUGGING:false}
-    
 jdbc:
   server: ${JDBC_SERVICE_IP:127.0.0.1}
   port: ${JDBC_SERVICE_PORT:3306}
@@ -55,4 +51,13 @@ jdbc:
     testOnReturn: ${JDBC_SLAVE_TESTONRETURN:false}
     poolPreparedStatements: ${JDBC_SLAVE_POOLPREPAREDSTATEMENTS:false}
     maxPoolPreparedStatementPerConnectionSize: ${JDBC_SLAVE_MAXPOOLPREPAREDSTATEMENTPERCONNECTIONSIZE:20}
-    FILTERS: ${JDBC_SLAVE_FILTERS:stat}
+    FILTERS: ${JDBC_SLAVE_FILTERS:stat}  
+    
+spring:
+  jpa:
+    show-sql: ${JPA_DEBUGGING:false}
+    
+
+management:
+  security:
+    enabled: false

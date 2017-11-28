@@ -9,33 +9,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>boss-config</artifactId>
-	<dependencies>
-
-		<dependency>
-			<groupId>org.eclipse.jgit</groupId>
-			<artifactId>org.eclipse.jgit</artifactId>
-			<version>3.7.1.201504261725-r</version><!--$NO-MVN-MAN-VER$-->
-		</dependency>
-			<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-config-server</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.eclipse.jgit</groupId>
-					<artifactId>org.eclipse.jgit</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-		<groupId>org.tmatesoft.svnkit</groupId>
-		<artifactId>svnkit</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-eureka</artifactId>
-		</dependency>
 	
-	</dependencies>
 
 	<build>
 		<plugins>
@@ -47,5 +21,26 @@
 	</build>
 
 
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-config-server</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-eureka</artifactId>
+    </dependency>
+</dependencies>
 
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-dependencies</artifactId>
+            <version>Camden.SR2</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
 </project>

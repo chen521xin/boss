@@ -16,8 +16,7 @@ import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 
-import org.apache.commons.configuration.DatabaseConfiguration;
-import org.apache.commons.lang3.StringUtils;
+
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -47,7 +46,7 @@ import com.boss.db.config.DbcontextHolder.DbType;
  **/
 @Configuration
 @ConditionalOnClass({ EnableTransactionManagement.class, EntityManager.class })
-@AutoConfigureAfter({ DatabaseConfiguration.class })
+@AutoConfigureAfter({ DataBaseConfiguration.class })
 @EntityScan("com.boss.core.db")
 @MapperScan(basePackages = { "com.boss.*.mapper" })
 public class MybatisConfiguration implements EnvironmentAware {
@@ -103,7 +102,7 @@ public class MybatisConfiguration implements EnvironmentAware {
 
 	public String getProfile() {
 		String profile = System.getProperty("PROFILE");
-		if (StringUtils.isEmpty(profile)) {
+		if (profile==null||profile.trim().equals("")) {
 			profile = "";
 		} else {
 			profile = "-" + profile;

@@ -9,7 +9,7 @@
 		        	 d_ca_info 
      GROUP BY
                 	 id 
-     ORDER　BY   
+     ORDER BY   
                  	 id 
          DESC
 	</select>

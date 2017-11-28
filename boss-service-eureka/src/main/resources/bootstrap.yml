@@ -3,10 +3,8 @@ server:
 
 spring:
   application:
-    name: ${APP_NAME:BOSS-SERVICE-EUREKA}
+    name: ${APP_NAME:boss-service-eureka}
     instance_id: ${random.value}
-  profiles:
-    active: ${PROFILE:native}
     
 eureka:
   instance:

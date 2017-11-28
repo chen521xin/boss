@@ -1,59 +1,47 @@
 sp:
   app:
-    port: ${APP_PORT:11003}
+    port: ${APP_PORT:11002}
     
 server:
-    port: ${sp.app.port:11003}
+    port: ${sp.app.port:11002}
+ 
+ribbon:
+  eureka:
+    enabled: true
+
+zuul:
+  routes:
+    boss-service-data:
+      path: /data/**
+      serviceId: boss-service_data${PRODUCER_TAG:}
+    boss-service-user:
+      path: /user/**
+      serviceId: boss-service_user${PRODUCER_TAG:}
+  sensitiveHeaders:
+  host:
+    maxTotalConnections: ${ZUUL_HOST_MAXTOTALCONNECTIONS:10000}
+    maxPerRouteconnections: ${ZUUL_HOST_MAXPERROUTECONNECTIONS:50}
+
+management:
+  security:
+    enabled: ${MANAGEMENT_SECURITY_ENABLED:false}
+   
+## spring:
+##   redis:
+##     host:
+##     port:
+##     password:
+##     database:
+
+## redis:
+##   expire:
+##     time: ${REDIS_EXPIRE_TIME:3600}
+
+jwt:
+  token:
+    secret: ${TOKEN_SECRET:THISISSECRET}   
+    expiration: ${TOKEN_EXPIRATION:3600}
     
-spring:
-  jpa:
-    show-sql: ${JPA_DEBUGGING:false}
-    
-jdbc:
-  server: ${JDBC_SERVICE_IP:127.0.0.1}
-  port: ${JDBC_SERVICE_PORT:3306}
-  database: ${JDBC_DATABASE_NAME:boss}
-  url: jdbc:mysql://${jdbc.server}:${jdbc.port}/${jdbc.database}
-  driverClassName: ${JDBC_DRIVER_CLASS_NAME:com.mysql.jdbc.Driver}
-  userName: ${JDBC_USERNAME:boss}
-  password: ${JDBC_PASSWORD:111111}
-  maxWait: ${JDBC_MAX_WAIT:10000}
-  initialSize: ${JDBC_INITIALSIZE:1}
-  minIdle: ${JDBC_MINIDLE:1}
-  maxActive: ${JDBC_MIX_ACTIVE:1000}
-  logAbandoned: ${JDBC_LOG_ABANDONED:true}
-  removeAbandoned: ${JDBC_REMOVE_ABANDONED:true}
-  removeAbandonedTimeout: ${JDBC_REMOVE_ABANDONED_TIMEOUT:5000}
-  timeBetweenEvictionRunMillis: ${JDBC_SLAVE_TIMEBETWEENENVICTIONRUNMILLIS:60000}
-  minEvictableIdleTimeMillis: ${JDBC_SLAVE_MINEVICTABLEIDLETIMEMILLIS:30000}
-  validationQuery: ${JDBC_SLAVE_VALIDATIONQUERY:SELECT 'X'}
-  testWhileIdle: ${JDBC_SLAVE_TESTWHILEIDLE:true}
-  testOnBorrow: ${JDBC_SLAVE_TESTONBORROW:false}
-  testOnReturn: ${JDBC_SLAVE_TESTONRETURN:false}
-  poolPreparedStatements: ${JDBC_SLAVE_POOLPREPAREDSTATEMENTS:false}
-  maxPoolPreparedStatementPerConnectionSize: ${JDBC_SLAVE_MAXPOOLPREPAREDSTATEMENTPERCONNECTIONSIZE:20}
-  FILTERS: ${JDBC_SLAVE_FILTERS:stat}
-  slave:
-    server: ${JDBC_SERVICE_IP:${jdbc.server}}
-    port: ${JDBC_SERVICE_PORT:${jdbc.port}}
-    database: ${JDBC_DATABASE_NAME:${jdbc.database}}
-    url: jdbc:mysql://${jdbc.slave.server}:${jdbc.slave.port}/${jdbc.slave.database}
-    driverClassName: ${JDBC_DRIVER_CLASS_NAME:com.mysql.jdbc.Driver}
-    userName: ${JDBC_USERNAME:${jdbc.userName}}
-    password: ${JDBC_PASSWORD:${jdbc.password}}
-    maxWait: ${JDBC_MAX_WAIT:10000}
-    initialSize: ${JDBC_INITIALSIZE:1}
-    minIdle: ${JDBC_MINIDLE:1}
-    maxActive: ${JDBC_MIX_ACTIVE:1000}
-    logAbandoned: ${JDBC_LOG_ABANDONED:true}
-    removeAbandoned: ${JDBC_REMOVE_ABANDONED:true}
-    removeAbandonedTimeout: ${JDBC_REMOVE_ABANDONED_TIMEOUT:5000}
-    timeBetweenEvictionRunMillis: ${JDBC_SLAVE_TIMEBETWEENENVICTIONRUNMILLIS:60000}
-    minEvictableIdleTimeMillis: ${JDBC_SLAVE_MINEVICTABLEIDLETIMEMILLIS:30000}
-    validationQuery: ${JDBC_SLAVE_VALIDATIONQUERY:SELECT 'X'}
-    testWhileIdle: ${JDBC_SLAVE_TESTWHILEIDLE:true}
-    testOnBorrow: ${JDBC_SLAVE_TESTONBORROW:false}
-    testOnReturn: ${JDBC_SLAVE_TESTONRETURN:false}
-    poolPreparedStatements: ${JDBC_SLAVE_POOLPREPAREDSTATEMENTS:false}
-    maxPoolPreparedStatementPerConnectionSize: ${JDBC_SLAVE_MAXPOOLPREPAREDSTATEMENTPERCONNECTIONSIZE:20}
-    FILTERS: ${JDBC_SLAVE_FILTERS:stat}
+auth:
+  interface:
+    control: ${AUTH_INTERFACE_CONTROL:false}

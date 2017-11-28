@@ -44,8 +44,8 @@ public class DataBaseConfiguration implements EnvironmentAware {
 	private RelaxedPropertyResolver propertyresolver;
 
 	@Override
-	public void setEnvironment(Environment environment) {
-		this.propertyresolver = new RelaxedPropertyResolver(environment, "jdbc.");
+	public void setEnvironment(Environment env) {
+		this.propertyresolver = new RelaxedPropertyResolver(env, "jdbc.");
 	}
 
 	@Bean(value = "writerDataResource", destroyMethod = "close", initMethod = "init")
